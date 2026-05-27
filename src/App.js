@@ -1,25 +1,116 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
+export default function App() {
+
+  const product = {
+
+    name:
+"Modern React Development",
+
+    description:
+"Learn MVP thinking, scalability and architecture.",
+
+    price:29,
+
+    image:
+"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200"
+
+  };
+
+  function buyBook(){
+
+    const invoice =
+
+`INVOICE
+
+Invoice:
+INV-${Date.now()}
+
+Seller:
+Modern Web Academy
+
+Product:
+${product.name}
+
+Total:
+${product.price} EUR
+
+PayPal:
+paypal@example.com
+
+`;
+
+    const blob =
+      new Blob(
+        [invoice],
+        {
+type:"text/plain"
+        }
+      );
+
+    const url =
+URL.createObjectURL(
+blob
+);
+
+    const a =
+document.createElement(
+"a"
+);
+
+    a.href = url;
+
+    a.download =
+"invoice.txt";
+
+    a.click();
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+<div
+style={{
+maxWidth:700,
+margin:"auto",
+padding:20
+}}
+>
+
+<img
+src={product.image}
+alt=""
+width="100%"
+/>
+
+<h1>
+{product.name}
+</h1>
+
+<p>
+{product.description}
+</p>
+
+<h2>
+{product.price} EUR
+</h2>
+
+<button
+onClick={buyBook}
+>
+
+BUY
+
+</button>
+
+<p>
+
+Invoice downloads automatically.
+
+</p>
+
+</div>
+
+  );
+
+}
