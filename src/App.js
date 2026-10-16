@@ -1,129 +1,116 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function App() {
 
-  const [invoice, setInvoice] = useState(null);
-
   const product = {
 
-    name: "Modern React Development",
+    name:
+"Modern React Development",
 
     description:
-      "Learn MVP thinking, scalability and architecture.",
+"Learn MVP thinking, scalability and architecture.",
 
-    price: 29,
+    price:29,
 
     image:
-      "/images/modern-react-development.jpg"
+"/images/for_book2.jpg"
+
 
   };
 
-  function buyBook() {
+  function buyBook(){
 
-    setInvoice({
+    const invoice =
 
-      number:
-        "INV-" + Date.now(),
+`INVOICE
 
-      seller:
-        "Modern Web Academy",
+Invoice:
+INV-${Date.now()}
 
-      product:
-        product.name,
+Seller:
+Modern Web Academy
 
-      total:
-        product.price
+Product:
+${product.name}
 
-    });
+Total:
+${product.price} EUR
+
+PayPal:
+paypal@example.com
+
+`;
+
+    const blob =
+      new Blob(
+        [invoice],
+        {
+type:"text/plain"
+        }
+      );
+
+    const url =
+URL.createObjectURL(
+blob
+);
+
+    const a =
+document.createElement(
+"a"
+);
+
+    a.href = url;
+
+    a.download =
+"invoice.txt";
+
+    a.click();
 
   }
 
   return (
 
-    <div
-      style={{
-        maxWidth: 700,
-        margin: "auto",
-        padding: 20
-      }}
-    >
+<div
+style={{
+maxWidth:700,
+margin:"auto",
+padding:20
+}}
+>
 
-      <img
-        src={product.image}
-        alt=""
-        width="100%"
-      />
+<img
+src={product.image}
+alt=""
+width="100%"
+/>
 
-      <h1>
-        {product.name}
-      </h1>
+<h1>
+{product.name}
+</h1>
 
-      <p>
-        {product.description}
-      </p>
+<p>
+{product.description}
+</p>
 
-      <h2>
-        {product.price} EUR
-      </h2>
+<h2>
+{product.price} EUR
+</h2>
 
-      <button
-        onClick={buyBook}
-      >
-        BUY
-      </button>
+<button
+onClick={buyBook}
+>
 
-      {
+BUY
 
-        invoice &&
+</button>
 
-        <div
-          style={{
-            marginTop: 20,
-            padding: 20,
-            border: "1px solid #ccc"
-          }}
-        >
+<p>
 
-          <h2>
-            INVOICE
-          </h2>
+Invoice downloads automatically.
 
-          <p>
-            Invoice:
-            {" "}
-            {invoice.number}
-          </p>
+</p>
 
-          <p>
-            Seller:
-            {" "}
-            {invoice.seller}
-          </p>
-
-          <p>
-            Product:
-            {" "}
-            {invoice.product}
-          </p>
-
-          <p>
-            Total:
-            {" "}
-            {invoice.total}
-            {" "}
-            EUR
-          </p>
-
-          <p>
-            PayPal:
-            paypal@example.com
-          </p>
-
-        </div>
-
-      }
-
-    </div>
+</div>
 
   );
 
