@@ -1,7 +1,8 @@
 
-import React from "react";
+import React, { useState } from "react";
 
 export default function App() {
+  const [invoice, setInvoice] = useState(null);
   const product = {
     name: "Modern React Development",
     description: "Learn MVP thinking, scalability and architecture.",
@@ -10,32 +11,12 @@ export default function App() {
   };
 
   function buyBook() {
-    const invoice = `INVOICE
-
-Invoice:
-INV-${Date.now()}
-
-Seller:
-Modern Web Academy
-
-Product:
-${product.name}
-
-Total:
-${product.price} EUR
-
-PayPal:
-paypal@example.com
-`;
-
-    const blob = new Blob([invoice], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = "invoice.txt";
-    a.click();
-    URL.revokeObjectURL(url);
+    setInvoice({
+      number: "INV-" + Date.now(),
+      seller: "Modern Web Academy",
+      product: product.name,
+      total: product.price
+    });
   }
 
   return (
@@ -45,7 +26,16 @@ paypal@example.com
       <p>{product.description}</p>
       <h2>{product.price} EUR</h2>
       <button onClick={buyBook}>BUY</button>
-      <p>Invoice downloads automatically.</p>
+      {invoice && (
+        <div style={{ marginTop: 20, padding: 20, border: "1px solid #ccc" }}>
+          <h2>INVOICE</h2>
+          <p>Invoice: {invoice.number}</p>
+          <p>Seller: {invoice.seller}</p>
+          <p>Product: {invoice.product}</p>
+          <p>Total: {invoice.total} EUR</p>
+          <p>PayPal: paypal@example.com</p>
+        </div>
+      )}
     </div>
   );
 }
